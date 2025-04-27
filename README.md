@@ -20,7 +20,7 @@ This tool helps you narrow down possible solutions for your daily Wordle puzzle,
 - [x] Implement rules to filter based on guessed letters (correct positions, incorrect positions, and excluded letters)
 - [x] Output possible word suggestions
 - [ ] Improve GUI for better usability and aesthetics
-- [] Add instructions on how to use WordleHelper
+- [ ] Add instructions on how to use WordleHelper
 
 ## Motivation
 
