@@ -20,11 +20,8 @@ This tool helps you narrow down possible solutions for your daily Wordle puzzle,
 - [x] Implement rules to filter based on guessed letters (correct positions, incorrect positions, and excluded letters)
 - [x] Output possible word suggestions
 - [ ] Improve GUI for better usability and aesthetics
+- [] Add instructions on how to use WordleHelper
 
 ## Motivation
 
 I created this tool because some of the words used in Wordle puzzles, like "aalii", can feel unfair and frustrating. It's easy to feel cheated when you're expected to guess obscure words that don’t seem like common choices. With **WordleSolver**, you can have a clearer path to find words that fit the puzzle while still maintaining a fun challenge.
-
-## Disclaimer
-
-This tool aims to enhance the Wordle experience by suggesting possible words based on your inputs. It doesn’t aim to give you an unfair advantage, just a more informed way to make your guesses.
