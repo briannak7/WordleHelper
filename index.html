@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle Solver</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Wordle Solver</h1>
+        
+        <!-- 5 Boxes at the top for correct positions (display only) -->
+        <div class="wordle-grid">
+            <div class="grid-box" id="box-0"></div>
+            <div class="grid-box" id="box-1"></div>
+            <div class="grid-box" id="box-2"></div>
+            <div class="grid-box" id="box-3"></div>
+            <div class="grid-box" id="box-4"></div>
+        </div>
+
+        <div class="input-section">
+            <label for="excluded-letters">Excluded Letters (comma separated):</label>
+            <input type="text" id="excluded-letters" name="excluded-letters" placeholder="e.g. a, b, c">
+        </div>
+
+        <div class="input-section">
+            <label for="included-letters">Included Letters (comma separated):</label>
+            <input type="text" id="included-letters" name="included-letters" placeholder="e.g. d, e, y">
+        </div>
+
+        <div class="input-section">
+            <label for="included-positions">Included Positions (e.g. 0:w, 1:e):</label>
+            <input type="text" id="included-positions" name="included-positions" placeholder="e.g. 0:w, 1:e">
+        </div>
+
+        <div class="input-section">
+            <label for="excluded-positions">Excluded Positions (e.g. 0:w, 2:r):</label>
+            <input type="text" id="excluded-positions" name="excluded-positions" placeholder="e.g. 0:w, 2:r">
+        </div>
+
+        <div class="button-container">
+            <button id="apply-filters" class="button">Apply Filters</button>
+            <button id="reset-filters" class="button">Reset</button>
+        </div>
+
+        <h2>Possible Words:</h2>
+        <textarea id="possible-words" rows="10" cols="50" readonly></textarea>
+        
+        <h2>Included Letters:</h2>
+        <p id="included-letters-display">None</p>
+
+        <h2>Excluded Letters:</h2>
+        <p id="excluded-letters-display">None</p>
+
+        <h2>Included Positions:</h2>
+        <p id="included-positions-display">None</p>
+
+        <h2>Excluded Positions:</h2>
+        <p id="excluded-positions-display">None</p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

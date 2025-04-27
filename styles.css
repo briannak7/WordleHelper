@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* Style for the 5 boxes at the top */
+.wordle-grid {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    border: 2px solid black;  /* Added black border around the grid */
+    padding: 10px; /* Adds some space inside the border */
+    border-radius: 10px; /* Rounded corners for the grid */
+    background-color: #f9f9f9;
+}
+
+.grid-box {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    text-align: center;
+    line-height: 50px; /* Center the text vertically */
+    border: 2px solid black; /* Black border for each individual box */
+    background-color: #f4f4f9;
+    text-transform: uppercase;
+    color: #333;
+}
+
+/* Input section styles */
+.input-section {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.button-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+button.button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+button.button:hover {
+    background-color: #45a049;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+}
+
+p {
+    font-size: 1.2em;
+    color: #333;
+}
