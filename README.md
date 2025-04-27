@@ -1,6 +1,6 @@
-# WordleSolver
+# WordleHelper
 
-Welcome to **WordleSolver**!
+Welcome to **WordleHelper**!
 
 This tool helps you narrow down possible solutions for your daily Wordle puzzle, based on the letters you've already guessed. It's designed to improve your gameplay and reduce frustration, especially when faced with obscure words that seem unfair.
 
@@ -24,4 +24,4 @@ This tool helps you narrow down possible solutions for your daily Wordle puzzle,
 
 ## Motivation
 
-I created this tool because some of the words used in Wordle puzzles, like "aalii", can feel unfair and frustrating. It's easy to feel cheated when you're expected to guess obscure words that don’t seem like common choices. With **WordleSolver**, you can have a clearer path to find words that fit the puzzle while still maintaining a fun challenge.
+I created this tool because some of the words used in Wordle puzzles, like "aalii", can feel unfair and frustrating. It's easy to feel cheated when you're expected to guess obscure words that don’t seem like common choices. With **WordleHelper**, you can have a clearer path to find words that fit the puzzle while still maintaining a fun challenge.
