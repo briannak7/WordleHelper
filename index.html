@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wordle Solver</title>
+    <title>WordleHelper</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Wordle Solver</h1>
+        <h1>WordleHelper</h1>
         
         <!-- 5 Boxes at the top for correct positions (display only) -->
         <div class="wordle-grid">
@@ -47,18 +47,29 @@
         <h2>Possible Words:</h2>
         <textarea id="possible-words" rows="10" cols="50" readonly></textarea>
         
-        <h2>Included Letters:</h2>
-        <p id="included-letters-display">None</p>
-
-        <h2>Excluded Letters:</h2>
-        <p id="excluded-letters-display">None</p>
-
-        <h2>Included Positions:</h2>
-        <p id="included-positions-display">None</p>
-
-        <h2>Excluded Positions:</h2>
-        <p id="excluded-positions-display">None</p>
-    </div>
+        <div class="info-display">
+            <div class="info-row">
+                <div class="info-column">
+                    <h2>Included Letters:</h2>
+                    <p id="included-letters-display">None</p>
+                </div>
+                <div class="info-column">
+                    <h2>Excluded Letters:</h2>
+                    <p id="excluded-letters-display">None</p>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-column">
+                    <h2>Included Positions:</h2>
+                    <p id="included-positions-display">None</p>
+                </div>
+                <div class="info-column">
+                    <h2>Excluded Positions:</h2>
+                    <p id="excluded-positions-display">None</p>
+                </div>
+            </div>
+        </div>
+        
 
     <script src="app.js"></script>
 </body>

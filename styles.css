@@ -97,3 +97,24 @@ p {
     font-size: 1.2em;
     color: #333;
 }
+.info-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Create two equal columns */
+    grid-gap: 20px; /* Add space between rows and columns */
+    margin-top: 20px;
+}
+
+.info-row {
+    display: contents; /* Treat this row as part of the grid */
+}
+
+.info-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+h2 {
+    margin: 0;
+    font-size: 1.2em;
+}
