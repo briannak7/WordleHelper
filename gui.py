@@ -2,19 +2,19 @@ import tkinter as tk
 from tkinter import messagebox
 from words import Wordle, read_words
 
-# Assuming you have the words in a file
+# Load words from file
 WORDS = "Wordle_words.txt"
 words = read_words(WORDS)
+print(f"Loaded {len(words)} words")  # Debug info
 wordle = Wordle(words)
 
-# GUI using Tkinter
 class WordleGUI:
     def __init__(self, root, wordle):
         self.wordle = wordle
         self.root = root
         self.root.title("Wordle Helper")
-        self.root.geometry("700x500")  # Increased window size
-        
+        self.root.geometry("700x550")
+
         # Display for filtered words
         self.words_label = tk.Label(root, text="Possible Words: ", font=("Helvetica", 12))
         self.words_label.pack(pady=10)
@@ -22,7 +22,7 @@ class WordleGUI:
         self.words_text = tk.Text(root, height=10, width=50)
         self.words_text.pack(pady=5)
 
-        # Section to show included and excluded letters and positions
+        # Info display
         self.info_frame = tk.Frame(root)
         self.info_frame.pack(pady=10)
 
@@ -46,19 +46,21 @@ class WordleGUI:
         self.included_not_positions_display = tk.Label(self.info_frame, text="None", font=("Helvetica", 10))
         self.included_not_positions_display.grid(row=3, column=1)
 
-        # Labels for the input fields
+        # Input fields
         self.create_label_and_entry(root, "Excluded Letters (comma separated)", 0)
         self.create_label_and_entry(root, "Included Letters (comma separated)", 1)
         self.create_label_and_entry(root, "Included Positions (e.g. 0:w, 1:e)", 2)
         self.create_label_and_entry(root, "Excluded Positions (e.g. 0:w, 2:r)", 3)
 
-        # Apply Filter Button
+        # Buttons
         self.apply_button = tk.Button(root, text="Apply Filters", command=self.apply_filters)
         self.apply_button.pack(pady=10)
 
-        # Reset Button
         self.reset_button = tk.Button(root, text="Reset", command=self.reset_filters)
         self.reset_button.pack(pady=5)
+
+        # Initial word display
+        self.update_words_text()
 
     def create_label_and_entry(self, root, label_text, row):
         label = tk.Label(root, text=label_text, font=("Helvetica", 10))
@@ -66,64 +68,68 @@ class WordleGUI:
 
         entry = tk.Entry(root, width=50)
         entry.pack(pady=5)
-        entry.insert(0, "")  # Blank placeholder text
-        setattr(self, f"entry_{row}", entry)  # Store the entry widget for later use
+        setattr(self, f"entry_{row}", entry)
 
     def apply_filters(self):
-        # Get the inputs
-        excluded_letters = self.entry_0.get().split(",")
-        excluded_letters = [letter.strip() for letter in excluded_letters]
+        self.wordle.reset()  # Start from full list on each apply
 
-        included_letters = self.entry_1.get().split(",")
-        included_letters = [letter.strip() for letter in included_letters]
+        # Gather and sanitize inputs
+        excluded_letters = [l.strip() for l in self.entry_0.get().split(",") if l.strip()]
+        included_letters = [l.strip() for l in self.entry_1.get().split(",") if l.strip()]
+        included_positions = self.parse_positions(self.entry_2.get(), allow_multiple=False)
+        included_not_positions = self.parse_positions(self.entry_3.get(), allow_multiple=True)
 
-        included_positions = self.parse_positions(self.entry_2.get())
-        included_not_positions = self.parse_positions(self.entry_3.get())
 
-        # Apply the filters
-        self.wordle.exclude_letters(excluded_letters)
-        self.wordle.include_letters(included_letters)
-        self.wordle.include_letter_position(included_positions)
-        self.wordle.include_letter_not_position(included_not_positions)
+        # Apply filters only if input exists
+        if excluded_letters:
+            self.wordle.exclude_letters(excluded_letters)
+        if included_letters:
+            self.wordle.include_letters(included_letters)
+        if included_positions:
+            self.wordle.include_letter_position(included_positions)
+        if included_not_positions:
+            self.wordle.include_letter_not_position(included_not_positions)
 
-        # Update the displayed words
+        # Update display
         self.update_words_text()
-        # Update the info display
         self.update_info_display()
 
     def reset_filters(self):
-        # Reset the wordle object and GUI inputs
         self.wordle.reset()
-        self.entry_0.delete(0, tk.END)
-        self.entry_1.delete(0, tk.END)
-        self.entry_2.delete(0, tk.END)
-        self.entry_3.delete(0, tk.END)
+        for i in range(4):
+            getattr(self, f"entry_{i}").delete(0, tk.END)
         self.update_words_text()
-        # Reset the info display
         self.update_info_display()
 
     def update_words_text(self):
-        # Display the possible words in the text box
         self.words_text.delete(1.0, tk.END)
-        for word in self.wordle.words:
-            self.words_text.insert(tk.END, word + "\n")
+        if not self.wordle.words:
+            self.words_text.insert(tk.END, "No words match your filters.")
+        else:
+            for word in self.wordle.words:
+                self.words_text.insert(tk.END, word + "\n")
 
     def update_info_display(self):
-        # Update the info labels with the current values
-        self.included_letters_display.config(text=", ".join(self.wordle.included_letters) if self.wordle.included_letters else "None")
-        self.excluded_letters_display.config(text=", ".join(self.wordle.excluded_letters) if self.wordle.excluded_letters else "None")
-        self.included_positions_display.config(text=", ".join([f"{pos}:{letter}" for pos, letter in self.wordle.included_positions.items()]) if self.wordle.included_positions else "None")
-        self.included_not_positions_display.config(text=", ".join([f"{pos}:{letter}" for pos, letter in self.wordle.included_not_positions.items()]) if self.wordle.included_not_positions else "None")
+        self.included_letters_display.config(
+            text=", ".join(self.wordle.included_letters) if self.wordle.included_letters else "None")
+        self.excluded_letters_display.config(
+            text=", ".join(self.wordle.excluded_letters) if self.wordle.excluded_letters else "None")
+        self.included_positions_display.config(
+            text=", ".join(f"{k}:{v}" for k, v in self.wordle.included_positions.items()) if self.wordle.included_positions else "None")
+        self.included_not_positions_display.config(
+            text=", ".join(f"{k}:{v}" for k, v in self.wordle.included_not_positions.items()) if self.wordle.included_not_positions else "None")
 
-    def parse_positions(self, position_string):
-        # Parse the positions input, e.g. "0:w, 1:e" to a dictionary
+    def parse_positions(self, position_string, allow_multiple=False):
         positions = {}
         if position_string:
             for pair in position_string.split(","):
-                pos, letter = pair.split(":")
-                positions[int(pos)] = letter.strip()
+                if ":" in pair:
+                    pos, letter = pair.split(":")
+                    pos = int(pos.strip())
+                    letter = letter.strip()
+                    # Always assign single letters, no sets
+                    positions[pos] = letter
         return positions
-
 
 if __name__ == "__main__":
     root = tk.Tk()
