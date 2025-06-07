@@ -74,6 +74,7 @@ class Wordle:
     def exclude_letters(self, excluded_letters):
         # add the excluded letter(s) to the existing excluded letters IF not already in the list
         self.__update_rules__(excluded_letters=excluded_letters)
+        # check that the letter is not in the word
         self.words = [word for word in self.words if not any(letter in word for letter in excluded_letters)]
         return self.words
     
@@ -81,6 +82,7 @@ class Wordle:
     def include_letters(self, included_letters):
         # add the included letter(s) to the existing included letters IF not already in the list
         self.__update_rules__(included_letters=included_letters)
+        # check that the letter is in the word
         self.words = [word for word in self.words if all(letter in word for letter in included_letters)]
         return self.words
     
@@ -89,26 +91,28 @@ class Wordle:
         # add the included letter(s) and positions to rules IF not already in them
         self.__update_rules__(included_letters=list(included_positions.values()))
         self.__update_rules__(included_positions=included_positions)
+        # check that the letter is in the specified position
         self.words = [word for word in self.words if all(word[pos] == letter for pos, letter in included_positions.items())]
         return self.words
     
     def include_letter_not_position(self, included_not_positions: dict):
-        # add the included letter(s) and positions to rules IF not already in them
         self.__update_rules__(included_letters=list(included_not_positions.values()))
         self.__update_rules__(included_not_positions=included_not_positions)
-        self.words = [word for word in self.words if all(word[pos] != letter for pos, letter in included_not_positions.items())]
+        # check that the letter is in the word, but not in the specified position
+        self.words = [word for word in self.words if all(word[pos] != letter and letter in word for pos, letter in included_not_positions.items())]
         return self.words
+
 
 if __name__ == "__main__":
     words = read_words("Wordle_words.txt")
     #words = ['weedy', 'weepy', 'wendy']
     wordle = Wordle(words)
-    # excluded_letters = ['a', 'b', 'c', 'i', 'o', 'u', 'z', 's', 't', 'r', 'g', 'h', 'j', 'k', 'l', 'm', 'n']
-    included_letters = ['e', 'y', 'd']
-    letter_positions = {1:'e'}
-    included_not_positions = {0:'e', 3:'e'}
-    # wordle.exclude_letters(excluded_letters)
-    wordle.include_letters(included_letters)
+    excluded_letters = ['p','e','a','c','h','i','s','f','l']
+    # included_letters = ['e', 'y', 'd']
+    letter_positions = {2:'o',3:"u"}
+    included_not_positions = {4:'r'}
+    wordle.exclude_letters(excluded_letters)
+    # wordle.include_letters(ncluded_letters)
     wordle.include_letter_position(letter_positions)
     wordle.include_letter_not_position(included_not_positions)
     print(wordle)  
